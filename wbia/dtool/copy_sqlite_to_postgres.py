@@ -614,12 +614,11 @@ def run_pgloader(sqlite_uri: str, postgres_uri: str) -> subprocess.CompletedProc
         import os
 
         os.system(
-            f'pgloader -a --load-lisp-file {str(wbia_transforms)} {str(pgloader_config)}'
+            f'pgloader --load-lisp-file {str(wbia_transforms)} {str(pgloader_config)}'
         )
         proc = subprocess.run(
             [
                 'pgloader',
-                '-a',
                 '--load-lisp-file',
                 str(wbia_transforms),
                 str(pgloader_config),
