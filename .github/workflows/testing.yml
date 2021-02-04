@@ -90,10 +90,9 @@ jobs:
         run: pip install -e .[tests,postgres]
       - name: Test with pytest
         run: |
-          pgloader --help
           mkdir -p data/work
           python -m wbia --set-workdir data/work --preload-exit
-          pytest --slow --web-tests --with-postgres-uri=$POSTGRES_URI
+          pytest -x --slow --web-tests --with-postgres-uri=$POSTGRES_URI
         env:
           POSTGRES_URI: ${{ matrix.postgres-uri }}
 

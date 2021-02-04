@@ -611,10 +611,20 @@ def run_pgloader(sqlite_uri: str, postgres_uri: str) -> subprocess.CompletedProc
         with wbia_transforms.open('w') as fb:
             fb.write(TRANSFORMS_LISP)
 
+        import os
+
+        os.system(
+            f'pgloader -a --load-lisp-file {str(wbia_transforms)} {str(pgloader_config)}'
+        )
         proc = subprocess.run(
-            ['pgloader', '--load-lisp-file', str(wbia_transforms), str(pgloader_config)],
+            [
+                'pgloader',
+                '-a',
+                '--load-lisp-file',
+                str(wbia_transforms),
+                str(pgloader_config),
+            ],
             stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
         )
         proc.check_returncode()  # raises subprocess.CalledProcessError
         logger.debug(proc.stdout.decode())
